@@ -1,8 +1,8 @@
 /*
 https://docs.nestjs.com/controllers#controllers
 */
-import { Body, Controller, Req, Res, Get } from '@nestjs/common';
-import { CustomRequest, CustomResponse } from 'src/type/http.type';
+import { Controller, Res, Get } from '@nestjs/common';
+import { CustomResponse } from 'src/type/http.type';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SurveyBoardEntity } from 'src/entity/survey-board.entity';
 import { Repository } from 'typeorm';

@@ -6,6 +6,7 @@ import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/entity/user.entity';
 import { CustomRequest, CustomResponse } from 'src/type/http.type';
+import { FirebaseUtil } from 'src/util/firebase.util';
 import { Repository } from 'typeorm';
 
 @Controller('auth')
@@ -16,7 +17,8 @@ export class AuthController {
     // entity를 repository로 감싸줌
     @InjectRepository(UserEntity)
     // DI
-    private userRepo: Repository<UserEntity>
+    private userRepo: Repository<UserEntity>,
+    private firebaseUtil: FirebaseUtil
   ) { }
 
   @Post('sign-up')
@@ -31,11 +33,17 @@ export class AuthController {
     console.log(`SUJIN:: ~ body`, body)
     try {
 
+      // token 검증
+      const user = await this.firebaseUtil.verifyIdToken(body.token);
+
+      // 이메일 검증
+
       const newUser = this.userRepo.create();
 
       newUser.email = `${body.email}`;
       newUser.password = `${body.password}`;
       newUser.name = `${body.name}`;
+
 
       const saveRes = await this.userRepo.save(newUser);
 
