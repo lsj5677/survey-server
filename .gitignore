@@ -24,8 +24,8 @@ lerna-debug.log*
 .classpath
 .c9/
 *.launch
-.settings/
 *.sublime-workspace
+.settings/
 
 # IDE - VSCode
 .vscode/*
