@@ -15,7 +15,7 @@ export const getDatabaseConfig = async (): Promise<TypeOrmModuleOptions> => {
     username: "root",
     password: "",
     database: "survey",
-    logging: true,
+    // logging: true,
     entities: [...EntityList],
     subscribers: [],
     migrations: [],

@@ -11,7 +11,6 @@ export class AuthService {
   constructor(
     // entity를 repository로 감싸줌
     @InjectRepository(UserEntity)
-
     private userRepo: Repository<UserEntity>,
     private firebaseUtil: FirebaseUtil,
     private authUtil: AuthUtil
@@ -40,7 +39,6 @@ export class AuthService {
   }
 
   async tokenVerify(params): Promise<any> {
-    console.log(`SUJIN:: ~ body`, params)
     try {
       const user = await this.firebaseUtil.verifyIdToken(params.token);
       // 이메일로 사용자정보 조회해서 가져오기
@@ -49,7 +47,7 @@ export class AuthService {
           email: `${user.email}`
         }
       })
-      console.log(`SUJIN:: ~ userInfo`, userInfo)
+      // console.log(`SUJIN:: ~ userInfo`, userInfo)
 
       return userInfo;
 

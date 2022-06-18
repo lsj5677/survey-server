@@ -1,8 +1,8 @@
 /*
 https://docs.nestjs.com/controllers#controllers
 */
-import { Controller, Res, Get } from '@nestjs/common';
-import { CustomResponse } from 'src/type/http.type';
+import { Controller, Res, Get, Req } from '@nestjs/common';
+import { CustomRequest, CustomResponse } from 'src/type/http.type';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SurveyBoardEntity } from 'src/entity/survey-board.entity';
 import { Repository } from 'typeorm';
@@ -16,13 +16,17 @@ export class SurveyController {
 
   @Get('list')
   async getListAll(
+    @Req() req: CustomRequest,
     @Res() res: CustomResponse,
   ) {
-    console.log(`SUJIN:: ~ res`, res)
     try {
 
+      console.log(`SUJIN:: ~ req.userInfo`, req.userInfo)
+
+
+
       const surveyListAll = await this.surveyRepo.find();
-      console.log(`SUJIN:: ~ surveyListAll`, surveyListAll)
+      // console.log(`SUJIN:: ~ surveyListAll`, surveyListAll)
 
       return res.json(surveyListAll);
 
