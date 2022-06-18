@@ -9,6 +9,7 @@ import { SurveyBoardEntity } from './entity/survey-board.entity';
 import { EntityList, getDatabaseConfig } from './function/database.function';
 import { FirebaseUtil } from './util/firebase.util';
 import { AuthUtil } from './util/auth.util';
+import { AuthService } from './api/auth/auth.service';
 
 // module: 상관있는 도메인들 끼리 연결되어 있어야 함
 // app.module : 최상위의 모듈 -> 다른 모듈들 import
@@ -30,6 +31,11 @@ import { AuthUtil } from './util/auth.util';
     AppController
   ],
   // provider class
-  providers: [AppService, FirebaseUtil, AuthUtil],
+  providers: [
+    AppService,
+    FirebaseUtil,
+    AuthUtil,
+    AuthService
+  ],
 })
 export class AppModule { }
