@@ -20,7 +20,7 @@ export class SurveyBoardEntity {
   @Column({
     type: 'datetime',
   })
-  date?: any
+  endDate?: any
 
   @Column({
     type: 'enum',
@@ -38,6 +38,16 @@ export class SurveyBoardEntity {
     length: 20
   })
   target?: string
+
+  @Column({
+    type: 'text'
+  })
+  link?: string
+
+  @Column({
+    type: 'text'
+  })
+  description?: string
 
   @CreateDateColumn()
   createdAt?: any
