@@ -4,6 +4,7 @@ import { UserEntity } from 'src/entity/user.entity';
 import { AuthUtil } from 'src/util/auth.util';
 import { FirebaseUtil } from 'src/util/firebase.util';
 import { Repository } from 'typeorm';
+import { AuthSignInDto } from './auth.dto';
 
 
 @Injectable()
@@ -15,6 +16,29 @@ export class AuthService {
     private firebaseUtil: FirebaseUtil,
     private authUtil: AuthUtil
   ) { }
+
+  async signIn(params: AuthSignInDto): Promise<any> {
+    try {
+      // firebase token 검증
+      const user = await this.firebaseUtil.verifyIdToken(params.token);
+      // 사용자 DB조회
+      const found = await this.userRepo.findOne({ where: { email: user.email } });
+
+      if (!found) throw 'USER_NOT_FOUND';
+
+      const accessToken = this.authUtil.getAccessToken({ ...found });
+      const refreshToken = this.authUtil.getRefreshToken(found.id);
+
+      return {
+        userInfo: found,
+        accessToken,
+        refreshToken
+      }
+
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async createUser(params): Promise<any> {
     try {

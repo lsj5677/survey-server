@@ -22,7 +22,7 @@ export class RootGuard implements CanActivate {
 
     // 중간에서 가로챔
     const request = context.switchToHttp().getRequest();
-
+    console.log(`SUJIN:: ~ request.url`, request.url)
     let Authorization: string = request.get('Authorization');
     console.log(`SUJIN:: ~ Authorization`, Authorization)
 
@@ -30,10 +30,12 @@ export class RootGuard implements CanActivate {
     if (Authorization) {
       let token = Authorization.split(' ')[1];
       // firebaseUser get
-      const firebaseUser = await this.firebaseUtil.verifyIdToken(token);
+      // const firebaseUser = await this.firebaseUtil.verifyIdToken(token);
 
       // dbUser get
-      const userInfo = await this.authUtil.getUserInfo(firebaseUser.email);
+      // const userInfo = await this.authUtil.getUserInfo(firebaseUser.email);
+      const userInfo = await this.authUtil.accessTokenVerify(token);
+      console.log(`SUJIN:: ~ userInfo`, userInfo)
 
       // 조회한 사용자 정보 req에 넣어줌
       // customRequest에 정의

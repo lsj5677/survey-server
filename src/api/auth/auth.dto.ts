@@ -1,5 +1,10 @@
 import { IsOptional, IsString } from 'class-validator'
 
+
+export class AuthSignInDto {
+  @IsString()
+  token: string;
+}
 export class AuthSignUpDto {
   @IsString()
   email: string;

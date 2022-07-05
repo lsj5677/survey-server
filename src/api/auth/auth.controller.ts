@@ -5,7 +5,7 @@ https://docs.nestjs.com/controllers#controllers
 import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CustomResponse } from 'src/type/http.type';
-import { AuthSignUpDto, AuthTokenVerifyDto } from './auth.dto';
+import { AuthSignInDto, AuthSignUpDto, AuthTokenVerifyDto } from './auth.dto';
 
 // 통신의 입구 (요청하고 받는 것)
 @Controller('auth')
@@ -38,5 +38,14 @@ export class AuthController {
   ) {
     const userInfo = await this.authService.tokenVerify(authTokenVerifyDto);
     return res.json(userInfo);
+  }
+
+  @Post('sign-in')
+  async signIn(
+    @Body() authSignInDto: AuthSignInDto,
+    @Res() res: CustomResponse,
+  ): Promise<any> {
+    const signInRes = await this.authService.signIn(authSignInDto);
+    return res.json(signInRes);
   }
 }
