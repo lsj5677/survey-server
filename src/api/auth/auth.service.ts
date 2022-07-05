@@ -26,9 +26,11 @@ export class AuthService {
 
       if (!found) throw 'USER_NOT_FOUND';
 
+      // db에서 가져온 사용자 데이터로 토큰 생성
       const accessToken = this.authUtil.getAccessToken({ ...found });
       const refreshToken = this.authUtil.getRefreshToken(found.id);
 
+      // 클라이언트에 다시 보냄
       return {
         userInfo: found,
         accessToken,

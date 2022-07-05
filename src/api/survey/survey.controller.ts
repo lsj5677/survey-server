@@ -1,37 +1,51 @@
 /*
 https://docs.nestjs.com/controllers#controllers
 */
-import { Controller, Res, Get, Req } from '@nestjs/common';
+import { Controller, Res, Get, Req, Post, Body, UseGuards } from '@nestjs/common';
 import { CustomRequest, CustomResponse } from 'src/type/http.type';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SurveyBoardEntity } from 'src/entity/survey-board.entity';
+import { SurveyEntity } from 'src/entity/survey.entity';
 import { Repository } from 'typeorm';
+import { SurveyWriteDto } from './survey.dto';
+import { SurveyService } from './survey.service';
+import { AuthGuard } from 'src/guard/auth.guard';
+import { AuthSkip } from 'src/decorator/auth-skip.decorator';
 
 @Controller('survey')
+// authGuard 동작 (해당 컨트롤러 로그인 안하면 접근불가)
+@UseGuards(AuthGuard)
 export class SurveyController {
   constructor(
-    @InjectRepository(SurveyBoardEntity)
-    private surveyRepo: Repository<SurveyBoardEntity>
+    @InjectRepository(SurveyEntity)
+    private surveyRepo: Repository<SurveyEntity>,
+    private surveyService: SurveyService
   ) { }
 
   @Get('list')
+  // authSkip -> 로그인 안해도 접근 가능
+  @AuthSkip()
   async getListAll(
     @Req() req: CustomRequest,
     @Res() res: CustomResponse,
   ) {
     try {
-
-      console.log(`SUJIN:: ~ req.userInfo`, req.userInfo)
-
-
-
       const surveyListAll = await this.surveyRepo.find();
-      // console.log(`SUJIN:: ~ surveyListAll`, surveyListAll)
-
       return res.json(surveyListAll);
 
     } catch (error) {
       throw error;
     }
+  }
+
+  @Post('write')
+  async createSurvey(
+    @Body() surveyWriteDto: SurveyWriteDto,
+    @Res() res: CustomResponse,
+    @Req() req: CustomRequest
+  ) {
+
+    const userId = req.userInfo.id
+    const surveyInfo = await this.surveyService.createSurvey(surveyWriteDto, userId);
+    return res.json(surveyInfo)
   }
 }

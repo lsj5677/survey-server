@@ -1,4 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { CustomRequest } from "src/type/http.type";
 import { AuthUtil } from "src/util/auth.util";
 import { FirebaseUtil } from "src/util/firebase.util";
 
@@ -21,10 +22,9 @@ export class RootGuard implements CanActivate {
   ): Promise<boolean> {
 
     // 중간에서 가로챔
-    const request = context.switchToHttp().getRequest();
-    console.log(`SUJIN:: ~ request.url`, request.url)
+    const request: CustomRequest = context.switchToHttp().getRequest();
+
     let Authorization: string = request.get('Authorization');
-    console.log(`SUJIN:: ~ Authorization`, Authorization)
 
     // 토큰이 있으면 사용자 정보 조회
     if (Authorization) {
@@ -35,7 +35,6 @@ export class RootGuard implements CanActivate {
       // dbUser get
       // const userInfo = await this.authUtil.getUserInfo(firebaseUser.email);
       const userInfo = await this.authUtil.accessTokenVerify(token);
-      console.log(`SUJIN:: ~ userInfo`, userInfo)
 
       // 조회한 사용자 정보 req에 넣어줌
       // customRequest에 정의

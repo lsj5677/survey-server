@@ -1,10 +1,10 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { SurveyBoardEntity } from "src/entity/survey-board.entity";
+import { SurveyEntity } from "src/entity/survey.entity";
 import { UserEntity } from "src/entity/user.entity";
 
 export const EntityList = [
   UserEntity,
-  SurveyBoardEntity
+  SurveyEntity
 ]
 
 export const getDatabaseConfig = async (): Promise<TypeOrmModuleOptions> => {
