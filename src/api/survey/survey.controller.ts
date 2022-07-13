@@ -1,12 +1,12 @@
 /*
 https://docs.nestjs.com/controllers#controllers
 */
-import { Controller, Res, Get, Req, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Res, Get, Req, Post, Body, UseGuards, Query } from '@nestjs/common';
 import { CustomRequest, CustomResponse } from 'src/type/http.type';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SurveyEntity } from 'src/entity/survey.entity';
 import { Repository } from 'typeorm';
-import { SurveyWriteDto } from './survey.dto';
+import { SurveyListDto, SurveyWriteDto } from './survey.dto';
 import { SurveyService } from './survey.service';
 import { AuthGuard } from 'src/guard/auth.guard';
 import { AuthSkip } from 'src/decorator/auth-skip.decorator';
@@ -25,11 +25,12 @@ export class SurveyController {
   // authSkip -> 로그인 안해도 접근 가능
   @AuthSkip()
   async getListAll(
+    @Query() surveyListDto: SurveyListDto,
     @Req() req: CustomRequest,
     @Res() res: CustomResponse,
   ) {
     try {
-      const surveyListAll = await this.surveyRepo.find();
+      const surveyListAll = await this.surveyService.getListAll(surveyListDto);
       return res.json(surveyListAll);
 
     } catch (error) {

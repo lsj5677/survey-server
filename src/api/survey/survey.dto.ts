@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsNumberString, IsOptional, IsString } from "class-validator";
 
 export class SurveyWriteDto {
   @IsString()
@@ -18,4 +18,14 @@ export class SurveyWriteDto {
 
   @IsString()
   description: string;
+}
+
+export class SurveyListDto {
+  @IsNumberString()
+  @IsOptional()
+  page: number;
+
+  @IsNumberString()
+  @IsOptional()
+  limit: number;
 }
