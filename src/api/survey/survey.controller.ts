@@ -6,7 +6,7 @@ import { CustomRequest, CustomResponse } from 'src/type/http.type';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SurveyEntity } from 'src/entity/survey.entity';
 import { Repository } from 'typeorm';
-import { SurveyListDto, SurveyWriteDto } from './survey.dto';
+import { SurveyListDto, SurveyListGetOneDto, SurveyWriteDto } from './survey.dto';
 import { SurveyService } from './survey.service';
 import { AuthGuard } from 'src/guard/auth.guard';
 import { AuthSkip } from 'src/decorator/auth-skip.decorator';
@@ -33,6 +33,21 @@ export class SurveyController {
       const surveyListAll = await this.surveyService.getListAll(surveyListDto);
       return res.json(surveyListAll);
 
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @Get('list-one')
+  @AuthSkip()
+  async getListOne(
+    @Query() surveyListGetOneDto: SurveyListGetOneDto,
+    @Req() req: CustomRequest,
+    @Res() res: CustomResponse,
+  ) {
+    try {
+      const surveyListGetOne = await this.surveyService.getListOne(surveyListGetOneDto);
+      return res.json(surveyListGetOne)
     } catch (error) {
       throw error;
     }

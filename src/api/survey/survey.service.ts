@@ -53,5 +53,9 @@ export class SurveyService {
     }
   }
 
+  async getListOne(SurveyListGetOneDto): Promise<any> {
+    const surveyListGetOne = await this.surveyRepo.findOne(SurveyListGetOneDto)
+  }
+
 
 }

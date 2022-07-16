@@ -29,3 +29,8 @@ export class SurveyListDto {
   @IsOptional()
   limit: number;
 }
+
+export class SurveyListGetOneDto {
+  @IsNumber()
+  id: number;
+}
