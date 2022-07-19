@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
 
     // 사용자 정보 있으면 통과
     const res = authSkip || !!request?.userInfo?.id;
-    console.log(`SUJIN:: ~ res`, res)
+    // console.log(`SUJIN:: ~ res`, res)
 
     return res;
   }

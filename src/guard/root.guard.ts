@@ -25,6 +25,7 @@ export class RootGuard implements CanActivate {
     const request: CustomRequest = context.switchToHttp().getRequest();
 
     let Authorization: string = request.get('Authorization');
+    console.debug(`SUJIN:: ~ Authorization`, Authorization)
 
     // 토큰이 있으면 사용자 정보 조회
     if (Authorization) {

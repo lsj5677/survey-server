@@ -31,6 +31,6 @@ export class SurveyListDto {
 }
 
 export class SurveyListGetOneDto {
-  @IsNumber()
+  @IsNumberString()
   id: number;
 }
