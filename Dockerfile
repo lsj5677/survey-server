@@ -11,7 +11,7 @@ COPY . .
 RUN rm -rf node_modules
 RUN rm -rf package-lock.json
 RUN npm install
-RUN npm run Build
+RUN npm run build
 
 # Start Script
 COPY start.sh /root/start.sh
