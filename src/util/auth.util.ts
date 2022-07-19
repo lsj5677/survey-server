@@ -2,11 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/entity/user.entity';
-import { JWT_ACCESS_TOKEN_EXPIRATION_TIME, JWT_ACCESS_TOKEN_SECRET, JWT_REFRESH_TOKEN_EXPIRATION_TIME, JWT_REFRESH_TOKEN_SECRET } from 'src/secret/auth.secret';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthUtil {
+
+  JWT_ACCESS_TOKEN_EXPIRATION_TIME = process.env.JWT_ACCESS_TOKEN_SECRET
+  JWT_ACCESS_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN_SECRET
+  JWT_REFRESH_TOKEN_EXPIRATION_TIME = process.env.JWT_ACCESS_TOKEN_EXPIRATION_TIME
+  JWT_REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN_EXPIRATION_TIME
+
   constructor(
     private jwtService: JwtService,
     @InjectRepository(UserEntity)
@@ -33,8 +38,8 @@ export class AuthUtil {
   // 사용자 정보 전부 토큰으로 만들어줌
   getAccessToken(payload: any) {
     const signed = this.jwtService.sign(payload, {
-      secret: JWT_ACCESS_TOKEN_SECRET,
-      expiresIn: JWT_ACCESS_TOKEN_EXPIRATION_TIME + 's'
+      secret: this.JWT_ACCESS_TOKEN_SECRET,
+      expiresIn: this.JWT_ACCESS_TOKEN_EXPIRATION_TIME + 's'
     })
 
     return signed;
@@ -44,8 +49,8 @@ export class AuthUtil {
   getRefreshToken(userId: number) {
     const payload = { userId };
     const signed = this.jwtService.sign(payload, {
-      secret: JWT_REFRESH_TOKEN_SECRET,
-      expiresIn: JWT_REFRESH_TOKEN_EXPIRATION_TIME + 's'
+      secret: this.JWT_REFRESH_TOKEN_SECRET,
+      expiresIn: this.JWT_REFRESH_TOKEN_EXPIRATION_TIME + 's'
     })
 
     return signed;
@@ -54,10 +59,10 @@ export class AuthUtil {
   // 토큰이 들어왔을 때 원래 데이터로 돌림
   // verify 사용
   refreshTokenVerify(refreshToken: string): any {
-    return this.jwtService.verify(refreshToken, { secret: JWT_REFRESH_TOKEN_SECRET })
+    return this.jwtService.verify(refreshToken, { secret: this.JWT_REFRESH_TOKEN_SECRET })
   }
 
   accessTokenVerify(accessToken: string) {
-    return this.jwtService.verify(accessToken, { secret: JWT_ACCESS_TOKEN_SECRET })
+    return this.jwtService.verify(accessToken, { secret: this.JWT_ACCESS_TOKEN_SECRET })
   }
 }
