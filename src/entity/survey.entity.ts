@@ -3,13 +3,18 @@ import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateCol
 export enum SurveyBoardTimeEnum {
   A = '1-3분',
   B = '4-6분',
-  C = '7-10분',
+  C = '7-9분',
   D = '10분 이상'
 }
 @Entity('surveyboard')
-export class SurveyBoardEntity {
+export class SurveyEntity {
   @PrimaryGeneratedColumn()
   id?: number
+
+  @Column({
+    type: 'int'
+  })
+  userId?: number
 
   @Column({
     type: 'varchar',
@@ -18,9 +23,19 @@ export class SurveyBoardEntity {
   title?: string
 
   @Column({
-    type: 'datetime',
+    name: 'endDate',
+    type: 'varchar',
+    length: 20
   })
-  date?: any
+  endDate?: string
+
+  // get endDate() {
+  //   return +this._endDate
+  // }
+
+  // set endDate(newEndDate) {
+  //   this._endDate = `${newEndDate}`
+  // }
 
   @Column({
     type: 'enum',
@@ -38,6 +53,16 @@ export class SurveyBoardEntity {
     length: 20
   })
   target?: string
+
+  @Column({
+    type: 'text'
+  })
+  link?: string
+
+  @Column({
+    type: 'text'
+  })
+  description?: string
 
   @CreateDateColumn()
   createdAt?: any

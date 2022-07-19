@@ -13,11 +13,11 @@ export class UserEntity {
   })
   email?: string
 
-  @Column({
-    type: 'varchar',
-    length: 20
-  })
-  password?: string
+  // @Column({
+  //   type: 'varchar',
+  //   length: 20
+  // })
+  // password?: string
 
   @Column({
     type: 'varchar',
