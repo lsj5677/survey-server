@@ -3,18 +3,18 @@ phases:
   pre_build: 
     commands: 
       - echo now pre_build
-      - aws ecr get-login-password --region $REED_AWS_REGION | docker login --username AWS --password-stdin $REED_AWS_ACCOUNT_ID.$REED_AWS_REGION.amazonaws.com
+      - aws ecr get-login-password --region $SURVEY_AWS_REGION | docker login --username AWS --password-stdin $SURVEY_AWS_ACCOUNT_ID.$SURVEY_AWS_REGION.amazonaws.com
   build:
     commands:
       - echo now build
-      - echo "docker build -t $REED_IMAGE_REPO_NAME:$REED_IMAGE_TAG --build-arg --build-arg STAGE_ENV=$STAGE_ENV DOCKER_NAME=$DOCKER_NAME ."
-      - docker build -t $REED_IMAGE_REPO_NAME:$REED_IMAGE_TAG --build-arg STAGE_ENV=$STAGE_ENV --build-arg DOCKER_NAME=$DOCKER_NAME .
-      - docker tag $REED_IMAGE_REPO_NAME:$REED_IMAGE_TAG $REED_AWS_ACCOUNT_ID.$REED_AWS_REGION.amazonaws.com/$REED_IMAGE_REPO_NAME:$REED_IMAGE_TAG
+      - echo "docker build -t $SURVEY_IMAGE_REPO_NAME:$SURVEY_IMAGE_TAG --build-arg --build-arg STAGE_ENV=$STAGE_ENV DOCKER_NAME=$DOCKER_NAME ."
+      - docker build -t $SURVEY_IMAGE_REPO_NAME:$SURVEY_IMAGE_TAG --build-arg STAGE_ENV=$STAGE_ENV --build-arg DOCKER_NAME=$DOCKER_NAME .
+      - docker tag $SURVEY_IMAGE_REPO_NAME:$SURVEY_IMAGE_TAG $SURVEY_AWS_ACCOUNT_ID.$SURVEY_AWS_REGION.amazonaws.com/$SURVEY_IMAGE_REPO_NAME:$SURVEY_IMAGE_TAG
   post_build:
     commands:
       - echo now post_build
-      - docker push $REED_AWS_ACCOUNT_ID.$REED_AWS_REGION.amazonaws.com/$REED_IMAGE_REPO_NAME:$REED_IMAGE_TAG
-      - printf '[{"name":"%s","imageUri":"%s"}]' $REED_IMAGE_REPO_NAME $REED_AWS_ACCOUNT_ID.$REED_AWS_REGION.amazonaws.com/$REED_IMAGE_REPO_NAME:$REED_IMAGE_TAG > imagedefinitions.json
+      - docker push $SURVEY_AWS_ACCOUNT_ID.$SURVEY_AWS_REGION.amazonaws.com/$SURVEY_IMAGE_REPO_NAME:$SURVEY_IMAGE_TAG
+      - printf '[{"name":"%s","imageUri":"%s"}]' $SURVEY_IMAGE_REPO_NAME $SURVEY_AWS_ACCOUNT_ID.$SURVEY_AWS_REGION.amazonaws.com/$SURVEY_IMAGE_REPO_NAME:$SURVEY_IMAGE_TAG > imagedefinitions.json
 artifacts:
   files: 
     - imagedefinitions.json
