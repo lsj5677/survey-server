@@ -9,6 +9,12 @@ export class AppController {
 
   // get 요청 데코레이터
   // @Get(string) => string : url
+  @Get()
+  // 요청이 들어왔을 때 실행되어야 할 함수 구현
+  healthCheck(): string {
+    return this.appService.healthCheck();
+  }
+
   @Get('test')
   // 요청이 들어왔을 때 실행되어야 할 함수 구현
   getHello(): string {
