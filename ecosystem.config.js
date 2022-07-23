@@ -2,7 +2,7 @@
 // pm2 list로 background에서 돌아가는 리스트 확인 가능
 
 module.exports = {
-  app: [{
+  apps: [{
     name: 'survey-server',
     script: 'dist/main.js',
 
