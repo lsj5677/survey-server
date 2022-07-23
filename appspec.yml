@@ -1,0 +1,9 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:ap-northeast-2:420829132772:task-definition/survey-server-task"
+        LoadBalancerInfo:
+          ContainerName: "survey-server"
+          ContainerPort: 3000
