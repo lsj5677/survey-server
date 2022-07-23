@@ -4,7 +4,7 @@
 module.exports = {
   app: [{
     name: 'survey-server',
-    script: 'dist/src/main.js',
+    script: 'dist/main.js',
 
     // 각 실행환경 환경변수
     env: {
