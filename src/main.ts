@@ -7,9 +7,18 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   console.log('process?.env?.PORT: ', process?.env?.PORT);
 
+  const prodOriginList = [
+    'https://survee.link',
+    'https://www.survee.link'
+  ]
+
+  const localOriginList = [
+    'http://localhost:8080'
+  ]
+
   // CORS 허용
   const options = {
-    "origin": ['http://localhost:8080'],
+    "origin": process?.env?.NODE_ENV === 'prod' ? prodOriginList : localOriginList,
     "methods": "GET, HEAD, PUT, PATCH, POST, DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204,
