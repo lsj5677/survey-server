@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 
 // 최종적으로 express를 통해서 mapping
 async function bootstrap() {
+  console.log('process?.env?.PORT: ', process?.env?.PORT);
 
   // CORS 허용
   const options = {
@@ -28,7 +29,9 @@ async function bootstrap() {
       transform: true // 요청에서 넘어온 자료 형변환
     })
   )
-  await app.listen(3000);
+
+
+  await app.listen(process?.env?.PORT ?? 3000);
 
 }
 bootstrap();
