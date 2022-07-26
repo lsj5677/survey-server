@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
+// 배포 테스트
 // 최종적으로 express를 통해서 mapping
 async function bootstrap() {
   console.log('process?.env?.PORT: ', process?.env?.PORT);
