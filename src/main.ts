@@ -27,7 +27,7 @@ async function bootstrap() {
 
 
   // AppModule 안에서부터 nest code
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.enableCors(options);
 
   // pipe로 dto 사용
