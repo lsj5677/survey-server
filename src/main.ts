@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 // 배포 테스트
 // 최종적으로 express를 통해서 mapping
 async function bootstrap() {
-  console.log('process?.env?.PORT: ', process?.env?.PORT);
+  console.log('process?.env?.PORT: ', process.env);
 
   const prodOriginList = [
     'https://survee.link',
@@ -18,11 +18,11 @@ async function bootstrap() {
 
   // CORS 허용
   const options = {
-    "origin": process?.env?.NODE_ENV === 'prod' ? prodOriginList : localOriginList,
+    "origin": process?.env?.NODE_ENV === 'production' ? prodOriginList : localOriginList,
     "methods": "GET, HEAD, PUT, PATCH, POST, DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204,
-    // "credentials": true
+    "credentials": true
   }
 
 
